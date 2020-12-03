@@ -155,7 +155,9 @@ class MySQLCRUDRowReader<K : CodingKey>: KeyedDecodingContainerProtocol {
 				throw CRUDDecoderError("Unsupported type: \(type) for key: \(key.stringValue)")
 			}
 			return try JSONDecoder().decode(type, from: data)
-		}
+        case .wrapped:
+            fatalError("Unsupported .wrapped special type.")
+        }
 	}
 	func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type, forKey key: Key) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
 		throw CRUDDecoderError("Unimplimented nestedContainer")
@@ -339,7 +341,9 @@ class MySQLGenDelegate: SQLGenDelegate {
 				typeName = "longtext"
 			case .codable:
 				typeName = "json"
-			}
+            case .wrapped:
+                fatalError("Unsupported .wrapped special type.")
+            }
 		}
 		let addendum: String
 		if column.properties.contains(.primaryKey) {
@@ -473,7 +477,9 @@ class MySQLStmtExeDelegate: SQLExeDelegate {
 			statement.bindParam(d)
 		case .sblob(let b):
 			statement.bindParam(b)
-		}
+        case .data(let b):
+            statement.bindParam(Array(b))
+        }
 	}
 }
 
