@@ -20,9 +20,9 @@
 import PackageDescription
 
 #if os(macOS)
-let clientPackage = "Perfect-mysqlclient"
+let clientPackage = "https://github.com/PerfectlySoft/Perfect-mysqlclient.git"
 #else
-let clientPackage = "Perfect-mysqlclient"
+let clientPackage = "https://github.com/Aranatha/Perfect-mysqlclient-Linux.git"
 #endif
 
 let package = Package(
@@ -35,7 +35,7 @@ let package = Package(
 	],
 	dependencies: [
         .package(url: "https://github.com/Aranatha/Perfect-CRUD.git", .branch("master")),
-		.package(url: "https://github.com/PerfectlySoft/\(clientPackage).git", from: "2.0.0"),
+		.package(url: clientPackage, from: "2.0.0"),
 		],
 	targets: [
 		.target(name: "PerfectMySQL", dependencies: ["PerfectCRUD"]),
