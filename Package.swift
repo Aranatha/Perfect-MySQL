@@ -22,7 +22,7 @@ import PackageDescription
 #if os(macOS)
 let clientPackage = "Perfect-mysqlclient"
 #else
-let clientPackage = "Perfect-mysqlclient-Linux"
+let clientPackage = "Perfect-mysqlclient"
 #endif
 
 let package = Package(
